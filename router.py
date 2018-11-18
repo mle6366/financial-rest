@@ -15,7 +15,7 @@ def home():
     This function just responds to the browser ULR
     localhost:5000/
 
-    :return:        the rendered template 'home.html'
+    :return: hello world string'
     """
     return 'hello world'
 
@@ -25,9 +25,22 @@ def get_portfolio():
     This function just responds to the browser ULR
     localhost:5000/
 
-    :return:        the rendered template 'home.html'
+    :return: the raw portfolio as csv'
     """
     return service.get_portfolio()
+
+@app.route('/get-plotly-portfolio')
+def get_portfolio_transformed():
+    """
+    :return: the portfolio transformed for Plotly.js'
+    points:
+    [{
+        x: [1, 2, 3],
+        y: [3, 0, 2]
+    }, ...
+    ]
+    """
+    return service.get_portfolio_transformed()
 
 
 # If we're running in stand alone mode, run the application
