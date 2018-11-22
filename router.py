@@ -25,7 +25,7 @@ def get_portfolio():
     This function just responds to the browser ULR
     localhost:5000/
 
-    :return: the raw portfolio as csv'
+    :return: the raw portfolio from s3 as csv'
     """
     return service.get_portfolio()
 

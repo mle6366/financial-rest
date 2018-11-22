@@ -1,16 +1,13 @@
-import pandas as pd
-import numpy as np
-from io import StringIO
 import json
 
 class TranformUtil:
     
-    def plotly_tranform(self, csv_bytestream):
+    def plotly_tranform(self, df):
         '''
         This will tranform the s3 response into a format
         suitable for Plotly.js graph.
 
-        - X-Axis is the time progression
+        - X-Axis is the time progression. Shared across all series.
         - Y-Axis is the value
         - Each 'point' is a series (one dataframe column)
         {
@@ -25,16 +22,10 @@ class TranformUtil:
                 }, . . .
             ]
         }
-        :param df:
+        :param df: Pandas Dataframe
         :return: json
         '''
-        s = str(csv_bytestream, 'utf-8')
-        buffered_string = StringIO(s) # allows for buffered reading of the String
-        df = pd.read_csv(buffered_string,
-                            dtype=np.float32,
-                            index_col='timestamp',
-                            parse_dates=True
-                        )
+
         # make x once, it is shared across all points
         x = df.index.values.tolist()
         points = []
