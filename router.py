@@ -1,6 +1,7 @@
 from flask import (
     Flask
 )
+from flask import Response
 from service import Service
 
 # Create the application instance
@@ -8,29 +9,23 @@ app = Flask(__name__)
 
 service = Service()
 
-# Create a URL route in our application for "/"
-@app.route('/')
-def home():
+
+@app.route('/portfolio/raw')
+def get_portfolio_raw():
     """
     This function just responds to the browser ULR
     localhost:5000/
 
-    :return: hello world string'
+    :return: the raw portfolio from s3 as csv
     """
-    return 'hello world'
+    response = service.get_portfolio_raw()
+    resp = Response(response)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
-@app.route('/get-portfolio')
+
+@app.route('/portfolio')
 def get_portfolio():
-    """
-    This function just responds to the browser ULR
-    localhost:5000/
-
-    :return: the raw portfolio from s3 as csv'
-    """
-    return service.get_portfolio()
-
-@app.route('/get-plotly-portfolio')
-def get_portfolio_transformed():
     """
     :return: the portfolio transformed for Plotly.js'
     points:
@@ -40,7 +35,44 @@ def get_portfolio_transformed():
     }, ...
     ]
     """
-    return service.get_portfolio_transformed()
+    response = service.get_portfolio()
+    resp = Response(response, mimetype="application/json")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+
+@app.route('/portfolio/refresh')
+def refresh():
+    """
+    Refreshes portfolio data with the latest in s3
+    :return: the portfolio from s3 as json
+    """
+    response = service.refresh_portfolio()
+    resp = Response(response, mimetype="application/json")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+
+@app.route('/portfolio/normalize')
+def get_normalized_portfolio():
+    """
+    :return: normalized portfolio as json
+    """
+    response = service.get_portfolio_normalized()
+    resp = Response(response, mimetype="application/json")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+
+@app.route('/portfolio/daily-returns')
+def get_daily_returns():
+    """
+    :return: daily returns of the portfolio, as json
+    """
+    response = service.get_portfolio_daily_returns()
+    resp = Response(response, mimetype="application/json")
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 
 # If we're running in stand alone mode, run the application
