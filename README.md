@@ -21,6 +21,7 @@ RESTful api to serve the portfolio data and portfolio transformations / calculat
 - unit tests for transform_util
 - standard response messages for 4xx, 5xx
 - create endpoints for the following:
+
 1. `GET /portfolio?start={}&end={}`
 2. `GET /normalized?symbols=[]&start={}&end={}`
 3. `GET /returns?symbols=[]&type=[day \ month \year ]&start={}&end={}`
