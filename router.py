@@ -1,13 +1,16 @@
 from flask import (
     Flask
 )
+from flask import request
+from flask import jsonify
 from flask import Response
 from service import Service
+from client_bad_request import ClientBadRequest
 
 # Create the application instance
 app = Flask(__name__)
 
-service = Service()
+service = Service(app.logger)
 
 
 @app.route('/portfolio/raw')
@@ -35,7 +38,11 @@ def get_portfolio():
     }, ...
     ]
     """
-    response = service.get_portfolio()
+    start = request.args.get('start')
+    end = request.args.get('end')
+    app.logger.info('start parameter received: {}'.format(start))
+    app.logger.info('end parameter received: {}'.format(end))
+    response = service.get_portfolio(start, end)
     resp = Response(response, mimetype="application/json")
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
@@ -58,7 +65,11 @@ def get_normalized_portfolio():
     """
     :return: normalized portfolio as json
     """
-    response = service.get_portfolio_normalized()
+    start = request.args.get('start')
+    end = request.args.get('end')
+    app.logger.info('start parameter received: {}'.format(start))
+    app.logger.info('end parameter received: {}'.format(end))
+    response = service.get_portfolio_normalized(start, end)
     resp = Response(response, mimetype="application/json")
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
@@ -69,10 +80,21 @@ def get_daily_returns():
     """
     :return: daily returns of the portfolio, as json
     """
-    response = service.get_portfolio_daily_returns()
+    start = request.args.get('start')
+    end = request.args.get('end')
+    app.logger.info('start parameter received: {}'.format(start))
+    app.logger.info('end parameter received: {}'.format(end))
+    response = service.get_portfolio_daily_returns(start, end)
     resp = Response(response, mimetype="application/json")
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
+
+
+@app.errorhandler(ClientBadRequest)
+def handle_bad_request(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status
+    return response
 
 
 # If we're running in stand alone mode, run the application
