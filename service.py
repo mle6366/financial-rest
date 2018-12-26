@@ -65,15 +65,14 @@ class Service:
         if start is None and end is None:
             return
 
-        if start is None and end is not None:
-            raise ClientBadRequest(message, status=400)
-
-        if start is not None and end is None:
-            raise ClientBadRequest(message, status=400)
-
         try:
-            datetime.datetime.strptime(start, fmt)
-            datetime.datetime.strptime(end, fmt)
+            start = datetime.datetime.strptime(start, fmt)
+            end = datetime.datetime.strptime(end, fmt)
         except Exception as e:
             self.logger.error("Portfolio Service Exception: {}".format(str(e)))
             raise ClientBadRequest(message, status=400, payload=str(e))
+
+        if start > end:
+            raise ClientBadRequest(message, status=400,
+                                   payload="Start date must be before end date.")
+
