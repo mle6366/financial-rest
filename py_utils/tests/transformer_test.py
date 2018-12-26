@@ -3,7 +3,7 @@ import unittest
 import datetime
 import json
 import logging
-from transform_util import TranformUtil
+from transformer import Transformer
 
 
 class TransformUtilTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class TransformUtilTest(unittest.TestCase):
         self.single_column_csv = "tests/data/portfolio.csv"
         self.multi_column_csv = "tests/data/multi-column.csv"
 
-    def test_transforSingleColumn(self):
+    def test_transformSingleColumn(self):
         # a single column in a csv (such as our portfolio)
         #   will evaluate to a single series, like: { points[ {x,y} ]}
         expected = {
@@ -21,7 +21,7 @@ class TransformUtilTest(unittest.TestCase):
                 'y': [586530.845803, 598698.1160159999, 601614.5574609999]
             }]
         }
-        transformer = TranformUtil()
+        transformer = Transformer()
         df = self.__prepareDataFrameFromCsv(self.single_column_csv)
         result = json.loads(transformer.plotly_tranform(df))
         print(json.dumps(result, indent=2))
@@ -62,7 +62,7 @@ class TransformUtilTest(unittest.TestCase):
                 }
             ]
         }
-        transformer = TranformUtil()
+        transformer = Transformer()
         df = self.__prepareDataFrameFromCsv(self.multi_column_csv)
         result = json.loads(transformer.plotly_tranform(df))
         print(json.dumps(result))

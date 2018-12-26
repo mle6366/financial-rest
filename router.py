@@ -5,7 +5,7 @@ from flask import request
 from flask import jsonify
 from flask import Response
 from service import Service
-from client_bad_request import ClientBadRequest
+from py_utils.rest_utils.client_bad_request import ClientBadRequest
 
 # Create the application instance
 app = Flask(__name__)

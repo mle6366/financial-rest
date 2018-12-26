@@ -1,6 +1,10 @@
 import json
 
-class TranformUtil:
+
+class Transformer:
+    """
+        Reusable class
+    """
     
     def plotly_tranform(self, df):
         '''

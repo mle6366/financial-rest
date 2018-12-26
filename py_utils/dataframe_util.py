@@ -4,8 +4,8 @@ from io import StringIO
 import logging
 import datetime
 
-class DataframeUtil:
 
+class DataframeUtil:
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
@@ -32,12 +32,11 @@ class DataframeUtil:
 
         try:
             df = pd.read_csv(buffered_string,
-                 dtype=datatype,
-                 index_col='timestamp',
-                 parse_dates=True)
+                             dtype=datatype,
+                             index_col='timestamp',
+                             parse_dates=True)
         except Exception as e:
             logging.error('DataframeUtil: Error parsing s3 csv into dataframe. '
                           ' {}'.format(e))
             df = pd.DataFrame(index=self.date_range)
-
         return df
