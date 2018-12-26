@@ -1,4 +1,4 @@
-# financial-rest
+# Portfolio API
 
 ## Summary
 RESTful api to serve the portfolio data and portfolio transformations / calculations.
@@ -33,7 +33,7 @@ RESTful api to serve the portfolio data and portfolio transformations / calculat
 ## API Gateway / Lambda Calls
 Note: This sits behind API Gateway and our [Custom OAuth Authorizer](https://github.com/ExpanseLLC/lambda_authorizer/wiki)
 
-`curl -i -X GET -H "Authorization: <auth token>" https://lt311mje5d.execute-api.us-west-2.amazonaws.com/prod/portfolio`
+`curl -i -X GET -H "Authorization: <auth token>" https://{host}.execute-api.us-west-2.amazonaws.com/prod/portfolio`
 
 ## TODO
 - clean up transform_util. 
