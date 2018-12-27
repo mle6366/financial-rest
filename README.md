@@ -3,6 +3,9 @@
 ## Summary
 (WIP) RESTful api to serve the portfolio data for [plotly-js](https://plot.ly/javascript/).
 
+Currently supports dataframe-to-json plotly-js transormation, normalization (pictured below), and daily return calculations.
+Future work includes Sharpe ratio, bollinger bands, and scatter-plot support (passing in symbols as args for comparison against the portfolio.)
+
 ![plotly-js graphing the portfolio](https://github.com/mle6366/financial-rest/blob/master/example/plotly-ui.png "Portfolio data graphed in Plotly.js")
 
 This is a small part of a larger, on-going financial data project. The larger project leverages multiple
