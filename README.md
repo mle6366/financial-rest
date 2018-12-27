@@ -3,7 +3,7 @@
 ## Summary
 (WIP) RESTful api to serve the portfolio data for [plotly-js](https://plot.ly/javascript/).
 
-![plotly-js graphing the portfolio](https://github.com/mle6366/financial-rest/tree/master/example/plotly-ui.png "Portfolio data graphed in Plotly.js")
+![plotly-js graphing the portfolio](https://github.com/mle6366/financial-rest/blob/master/example/plotly-ui.png "Portfolio data graphed in Plotly.js")
 
 This is a small part of a larger, on-going financial data project. The larger project leverages multiple
 interconnected [serverless](https://serverless.com/framework/) components deployed in AWS. Within that environment,
