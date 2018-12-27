@@ -1,15 +1,26 @@
+"""
+ Expanse, LLC
+ http://expansellc.io
+
+ Copyright 2018
+ Released under the Apache 2 license
+ https://www.apache.org/licenses/LICENSE-2.0
+
+ @authors Meghan Erickson
+"""
 import json
 
 
 class Transformer:
     """
-        Reusable class
-    """
-    
-    def plotly_tranform(self, df):
-        '''
-        This will tranform the s3 response into a format
+    This will tranform the s3 response into a format
         suitable for Plotly.js graph.
+    """
+
+    def plotly_tranform(self, df):
+        """
+        The dataframe this consumes should be indexed by date, which is
+        used to populate x-axis in a plotly-js graph.
 
         - X-Axis is the time progression. Shared across all series.
         - Y-Axis is the value
@@ -28,7 +39,7 @@ class Transformer:
         }
         :param df: Pandas Dataframe
         :return: json
-        '''
+        """
 
         # make x once, it is shared across all points
         x = df.index.values.tolist()

@@ -1,12 +1,50 @@
 # Portfolio API
 
 ## Summary
-RESTful api to serve the portfolio data and portfolio transformations / calculations.
+(WIP) RESTful api to serve the portfolio data.
 
-## Stack
+This is a small part of a larger, on-going financial data project. The larger project leverages multiple
+interconnected [serverless](https://serverless.com/framework/) components deployed in AWS. Within that environment,
+this API is deployed and handles requests via the [serverless wsgi plugin](https://www.npmjs.com/package/serverless-wsgi) 
+and is protected behind API Gateway and our [Custom OAuth Authorizer](https://github.com/ExpanseLLC/lambda_authorizer/wiki).
+
+This README only includes how to run this as a standalone Flask app.
+
+## Notes
+Reference `tests/data` for the portfolio data format
+
+
+## Getting Started
+
+Set env variables.
+Add the whitelisted domains as `CORS_DOMAINS` for your client(s). In this example, we are whitelisting everything.
+
+```bash
+
+export BUCKET="foo-bucket"
+export KEY="bar"
+export CORS_DOMAINS="*"
+
+```
+
+Install and run the application.
+
+```
+python3 -m venv .venv/
+
+source .venv/bin/activate
+
+pip3 install -r requirements.txt
+
+python3 router.py
+```
+
+## Stack / Technologies
 - python 3.5
 - flask
+- pandas
 - aws s3
+
 
 ## Contract
 
@@ -31,7 +69,6 @@ RESTful api to serve the portfolio data and portfolio transformations / calculat
 `curl -i -X GET http://{host}:5000/portfolio/refresh`
 
 ## API Gateway / Lambda Calls
-Note: This sits behind API Gateway and our [Custom OAuth Authorizer](https://github.com/ExpanseLLC/lambda_authorizer/wiki)
 
 `curl -i -X GET -H "Authorization: <auth token>" https://{host}.execute-api.us-west-2.amazonaws.com/prod/portfolio`
 

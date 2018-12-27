@@ -1,10 +1,20 @@
+"""
+ Expanse, LLC
+ http://expansellc.io
+
+ Copyright 2018
+ Released under the Apache 2 license
+ https://www.apache.org/licenses/LICENSE-2.0
+
+ @authors Meghan Erickson
+"""
 import boto3
 import numpy as np
 import datetime
 from py_utils.transformer import Transformer
 from py_utils.portfolio_client import PortfolioClient
 from py_utils.dataframe_util import DataframeUtil
-from py_utils.calc_utils import CalcUtils
+from py_utils.calc import Calc
 from py_utils.date_validation import DateValidation
 
 
@@ -12,14 +22,14 @@ class Service:
     def __init__(self, logger):
         # if date_range is None:
         now = datetime.datetime.now()
-        self.start = "{0:%Y-%m-%d}".format(now - datetime.timedelta(30, 0))
-        self.end = "{0:%Y-%m-%d}".format(now)
+        self.start = '{0:%Y-%m-%d}'.format(now - datetime.timedelta(30, 0))
+        self.end = '{0:%Y-%m-%d}'.format(now)
         self.transformer = Transformer()
         self.dataframeUtil = DataframeUtil()
         self.dateValidation = DateValidation()
-        self.calcUtil = CalcUtils()
+        self.calcUtil = Calc()
         self.logger = logger
-        logger.info("Instantiating Service. First time load of portfolio from s3 . . .")
+        logger.info('Instantiating Service. First time load of portfolio from s3 . . .')
         s3 = boto3.client('s3', region_name='us-west-2')
         self.client = PortfolioClient(s3)
         self.portfolio = self.client.get_portfolio_from_bucket()

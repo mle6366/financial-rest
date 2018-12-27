@@ -1,3 +1,13 @@
+"""
+ Expanse, LLC
+ http://expansellc.io
+
+ Copyright 2018
+ Released under the Apache 2 license
+ https://www.apache.org/licenses/LICENSE-2.0
+
+ @authors Meghan Erickson
+"""
 from flask import (
     Flask
 )
@@ -6,24 +16,22 @@ from flask import jsonify
 from flask import Response
 from service import Service
 from py_utils.rest_utils.client_bad_request import ClientBadRequest
+import os
 
 # Create the application instance
 app = Flask(__name__)
 
 service = Service(app.logger)
-
+WHITELIST = os.environ['CORS_DOMAINS']
 
 @app.route('/portfolio/raw')
 def get_portfolio_raw():
     """
-    This function just responds to the browser ULR
-    localhost:5000/
-
     :return: the raw portfolio from s3 as csv
     """
     response = service.get_portfolio_raw()
     resp = Response(response)
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = WHITELIST
     return resp
 
 
@@ -44,7 +52,7 @@ def get_portfolio():
     app.logger.info('end parameter received: {}'.format(end))
     response = service.get_portfolio(start, end)
     resp = Response(response, mimetype="application/json")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = WHITELIST
     return resp
 
 
@@ -55,8 +63,8 @@ def refresh():
     :return: the portfolio from s3 as json
     """
     response = service.refresh_portfolio()
-    resp = Response(response, mimetype="application/json")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp = Response(response, mimetype='application/json')
+    resp.headers['Access-Control-Allow-Origin'] = WHITELIST
     return resp
 
 
@@ -70,8 +78,8 @@ def get_normalized_portfolio():
     app.logger.info('start parameter received: {}'.format(start))
     app.logger.info('end parameter received: {}'.format(end))
     response = service.get_portfolio_normalized(start, end)
-    resp = Response(response, mimetype="application/json")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp = Response(response, mimetype='application/json')
+    resp.headers['Access-Control-Allow-Origin'] = WHITELIST
     return resp
 
 
@@ -85,8 +93,8 @@ def get_daily_returns():
     app.logger.info('start parameter received: {}'.format(start))
     app.logger.info('end parameter received: {}'.format(end))
     response = service.get_portfolio_daily_returns(start, end)
-    resp = Response(response, mimetype="application/json")
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp = Response(response, mimetype='application/json')
+    resp.headers['Access-Control-Allow-Origin'] = WHITELIST
     return resp
 
 
